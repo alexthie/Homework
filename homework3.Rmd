@@ -87,7 +87,7 @@ set.seed(63)
 outcome1 <- rnorm(500, mean=62.5, sd=20)
 outcome2 <- rnorm(500, mean=57.5, sd=20)
 outcome = c(outcome1, outcome2)
-treatment <- c(rep.int( 1, 50), rep.int(0, 50))
+treatment <- c(rep.int( 1, 500), rep.int(0, 500))
 
 y = data.frame(treatment, c(outcome1, outcome2))
 mod3 = lm(outcome ~ treatment, dat=y)
