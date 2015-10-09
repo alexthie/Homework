@@ -57,12 +57,24 @@ mod3 = lm(outcome ~ treatment, dat=y)
 summary(mod3)
 coef(summary(mod3))
 alpha = 0.05
-for (i in 1:100) {
-  repeat 
-    pt(2.199, 99, lower.tail = FALSE, log.p = FALSE) *2
+bu1 <- 0
+for (i in 1:1000) {
+  outcome1 <- rnorm(50, mean=62.5, sd=20)
+outcome2 <- rnorm(50, mean=57.5, sd=20)
+outcome = c(outcome1, outcome2)
+treatment <- c(rep.int( 1, 50), rep.int(0, 50))
+
+y = data.frame(treatment, c(outcome1, outcome2))
+mod3 = lm(outcome ~ treatment, dat=y)
+summary(mod3)
+    i <- coef(summary(mod3))
+    p <- (pt(i[2,3], 99, lower.tail = FALSE, log.p = FALSE) *2)
+    if (p < alpha) 
+      bu1 = bu1 + 1
   
 }
-
+power=bu1/1000
+power
 
 ```
 
@@ -71,9 +83,35 @@ for (i in 1:100) {
 1. Find the power when the sample size is 1000 patients. (5 points)
 
 ```{r}
+set.seed(63)
+outcome1 <- rnorm(500, mean=62.5, sd=20)
+outcome2 <- rnorm(500, mean=57.5, sd=20)
+outcome = c(outcome1, outcome2)
+treatment <- c(rep.int( 1, 50), rep.int(0, 50))
+
+y = data.frame(treatment, c(outcome1, outcome2))
+mod3 = lm(outcome ~ treatment, dat=y)
+summary(mod3)
+coef(summary(mod3))
+alpha = 0.05
+bu1 <- 0
 for (i in 1:1000) {
-  repeat 
-    pt(2.199, 99, lower.tail = FALSE, log.p = FALSE) *2
+  outcome1 <- rnorm(500, mean=62.5, sd=20)
+outcome2 <- rnorm(500, mean=57.5, sd=20)
+outcome = c(outcome1, outcome2)
+treatment <- c(rep.int( 1, 500), rep.int(0, 500))
+
+y = data.frame(treatment, c(outcome1, outcome2))
+mod3 = lm(outcome ~ treatment, dat=y)
+summary(mod3)
+    i <- coef(summary(mod3))
+    p <- (pt(i[2,3], 999, lower.tail = FALSE, log.p = FALSE) *2)
+    if (p < alpha) 
+      bu1 = bu1 + 1
+  
+}
+power=bu1/1000
+power
 
 ```
 
